@@ -12,7 +12,7 @@ from bs4 import BeautifulSoup
 from weaviate import WeaviateClient
 
 from project_paths import BLOB_STORAGE
-from document_store.queries import OnlineDocument, update_fetched_doc_meta, get_online_documents, add_online_document
+from document_store.queries import OnlineDocument, update_fetched_doc_meta, add_online_document
 from weaviate.util import generate_uuid5
 logger = logging.getLogger(__name__)
 

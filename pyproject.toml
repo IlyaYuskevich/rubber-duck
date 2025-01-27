@@ -8,5 +8,6 @@ dependencies = [
     "beautifulsoup4>=4.12.3",
     "fastembed-haystack>=1.4.1",
     "haystack-ai>=2.9.0",
+    "trafilatura>=2.0.0",
     "weaviate-haystack>=4.0.2",
 ]

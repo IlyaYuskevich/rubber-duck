@@ -1,12 +1,12 @@
 """Module providing recoursive scrapping of selected urls. The result is saved in blob storage"""
 
 from haystack import Pipeline
-from weaviate import Client
-from indexing_pipeline.file_writer import FileWriter
-from indexing_pipeline.cache_checker import CustomCacheChecker
-from indexing_pipeline.link_content_fetcher import CustomLinkContentFetcher
+from weaviate import WeaviateClient
+from scraping_pipeline.file_writer import FileWriter
+from scraping_pipeline.cache_checker import CustomCacheChecker
+from scraping_pipeline.link_content_fetcher import CustomLinkContentFetcher
 
-def init_web_scrapping_pipeline(client: Client) -> Pipeline:
+def init_web_scrapping_pipeline(client: WeaviateClient) -> Pipeline:
     cache_checker = CustomCacheChecker(client)
     fetcher = CustomLinkContentFetcher(client, retry_attempts = 2, timeout = 3)
     writer = FileWriter(client)
