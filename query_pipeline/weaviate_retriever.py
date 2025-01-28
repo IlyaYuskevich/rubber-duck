@@ -1,8 +1,9 @@
 import typing as t
 
-from haystack import component, Document
+from haystack import component
 from weaviate import WeaviateClient
 from weaviate.classes.query import MetadataQuery
+from weaviate.collections.classes.data import DataObject
 
 from document_store.store import DOCUMENTS_WITH_EMBEDDING
 
@@ -14,7 +15,7 @@ class WeaviateRetriever:
         self.top_k = top_k
         self.distance = distance
 
-    @component.output_types(documents=t.List[Document])
+    @component.output_types(documents=t.List[DataObject])
     def run(self, query_embedding: t.List[float]):
         """Searches top_k closest documents to a query."""
         collection = self.client.collections.get(DOCUMENTS_WITH_EMBEDDING)

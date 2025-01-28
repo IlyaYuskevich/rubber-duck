@@ -9,7 +9,7 @@ from query_pipeline.weaviate_retriever import WeaviateRetriever
 def init_query_pipleine(client: WeaviateClient) -> Pipeline:
 
     text_embedder = FastembedTextEmbedder()
-    retriever = WeaviateRetriever(client=client, top_k=10, distance=0.3)
+    retriever = WeaviateRetriever(client=client, top_k=4, distance=0.3)
 
     query_pipeline = Pipeline()
     query_pipeline.add_component("text_embedder", text_embedder)
