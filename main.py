@@ -1,6 +1,7 @@
 import sys
-from indexing_pipleline.indexing_pipeline import init_indexing_pipleine
 from scraping_pipeline.web_scrapping import init_web_scrapping_pipeline
+from query_pipeline.query_pipeline import init_query_pipleine
+from indexing_pipleline.indexing_pipeline import init_indexing_pipleine
 from document_store.store import connect_to_document_store
 
 def main():
@@ -35,6 +36,11 @@ def main():
             print(result['writer'])
         case 'query':
             query = sys.argv[2]
+            query_pipeline = init_query_pipleine(weaviate_client)
+            result = query_pipeline.run(data={"text_embedder": {"text": query}})
+            for doc in result["retriever"]["documents"]:
+                print(doc)
+                print('\n')
 
         case _:
             print("Invalid command. Use 'scrape', 'index', or 'query'.")
