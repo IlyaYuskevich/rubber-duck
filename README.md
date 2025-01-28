@@ -30,7 +30,14 @@ curl -LsSf https://astral.sh/uv/install.sh | sh
 
 ## Usage
 
-### Step 1: Scrape Online Documentation
+### Step 1: Preparing the Environment
+Make sure that Ollama and Docker are running in your system. Then launch Weaviate (Vector database) container:
+
+```bash
+docker compose up -d
+```
+
+### Step 2: Scrape Online Documentation
 Use the scraping pipeline to fetch online documentation and save it locally in a `blob_storage` directory.
 
 ```bash
@@ -41,7 +48,7 @@ You can also manually add additional files (e.g., PDFs) to the `blob_storage` di
 
 ---
 
-### Step 2: Index Your Documents
+### Step 3: Index Your Documents
 Populate the vector database with embeddings for your documents. Optionally, include additional directories such as project repositories.
 
 ```bash
@@ -50,7 +57,7 @@ uv run main.py index [OPTIONAL] <dir1> <dir2>
 
 ---
 
-### Step 3: Query with Context-Aware Responses
+### Step 4: Query with Context-Aware Responses
 Ask your Rubber Duck anything about your indexed documents.
 
 ```bash
