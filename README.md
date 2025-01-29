@@ -52,7 +52,7 @@ You can also manually add additional files (e.g., PDFs) to the `blob_storage` di
 Populate the vector database with embeddings for your documents. Optionally, include additional directories such as project repositories.
 
 ```bash
-uv run main.py index [OPTIONAL] <dir1> <dir2>
+uv run main.py index [OPTIONAL] <dir1> <dir2> ...
 ```
 
 ---

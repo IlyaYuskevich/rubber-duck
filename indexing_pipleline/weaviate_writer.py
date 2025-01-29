@@ -19,7 +19,6 @@ class WeaviateDocumentWriter:
         for document in documents:
             uuid = generate_uuid5(document.id)
             collection = self.client.collections.get(DOCUMENTS_WITH_EMBEDDING)
-            print(document.embedding)
             if collection.data.exists(uuid=uuid):
                 continue
             collection.data.insert(

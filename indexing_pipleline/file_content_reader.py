@@ -21,7 +21,13 @@ class FileContentReader():
                     if filepath.is_file():
                         stream = ByteStream.from_file_path(filepath)
                         stream.meta["path"] = str(filepath)
-                        stream.mime_type = "text/html"
+                        match filepath.suffix:
+                            case ".html":
+                                stream.mime_type = "text/html"
+                            case ".pdf":
+                                stream.mime_type = "application/pdf"
+                            case _:
+                                stream.mime_type = "text/plain"
                         streams.append(stream)
                 except PermissionError:
                     print(f"Not enough permissions to read file: {str(filepath)}")
