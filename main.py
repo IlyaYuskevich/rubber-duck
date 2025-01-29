@@ -68,7 +68,6 @@ def main():
                     model="deepseek-r1:7b",
                     messages=[{"role": "user", "content": prompt}],
                     stream=True,
-                    # keep_alive=60,
                 )
                 for chunk in stream:
                     print(chunk["message"]["content"], end="", flush=True)
@@ -79,6 +78,7 @@ def main():
 def build_prompt(question: str, documents: t.List[DataObject]) -> str:
     context = "\n".join([doc.properties.get("content") for doc in reversed(documents)])
     prompt = f"""
+
     Context: {context}
 
     Question: {question}

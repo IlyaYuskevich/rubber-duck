@@ -1,7 +1,7 @@
 from haystack import Pipeline
 from haystack.components.routers import FileTypeRouter
 from haystack.components.joiners.document_joiner import DocumentJoiner
-from haystack.components.converters import HTMLToDocument, PyPDFToDocument
+from haystack.components.converters import HTMLToDocument, PyPDFToDocument, TextFileToDocument
 from haystack.components.preprocessors import DocumentSplitter
 from haystack_integrations.components.embedders.fastembed import FastembedDocumentEmbedder
 from haystack.components.preprocessors import DocumentCleaner
@@ -16,6 +16,7 @@ def init_indexing_pipleine(client: WeaviateClient) -> Pipeline:
     reader = FileContentReader()
     html_converter = HTMLToDocument()
     pdf_converter = PyPDFToDocument()
+    text_converter = TextFileToDocument()
     joiner = DocumentJoiner(join_mode="concatenate")
     router = FileTypeRouter(mime_types=["text/html", "text/plain", "application/pdf"])
     
@@ -34,6 +35,7 @@ def init_indexing_pipleine(client: WeaviateClient) -> Pipeline:
     indexing_pipeline.add_component(instance=router, name="router")
     indexing_pipeline.add_component(instance=html_converter, name="html_converter")
     indexing_pipeline.add_component(instance=pdf_converter, name="pdf_converter")
+    indexing_pipeline.add_component(instance=text_converter, name="text_converter")
     indexing_pipeline.add_component(instance=joiner, name="joiner")
     indexing_pipeline.add_component(instance=cleaner, name="cleaner")
     indexing_pipeline.add_component(instance=splitter, name="splitter")
@@ -44,6 +46,9 @@ def init_indexing_pipleine(client: WeaviateClient) -> Pipeline:
 
     indexing_pipeline.connect("router.text/html", "html_converter.sources")
     indexing_pipeline.connect("html_converter.documents", "joiner.documents")
+
+    indexing_pipeline.connect("router.text/plain", "text_converter.sources")
+    indexing_pipeline.connect("text_converter.documents", "joiner.documents")
 
     indexing_pipeline.connect("router.application/pdf", "pdf_converter.sources")
     indexing_pipeline.connect("pdf_converter.documents", "joiner.documents")
